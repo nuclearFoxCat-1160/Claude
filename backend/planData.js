@@ -17,41 +17,44 @@ const DAY_LABEL = {
 };
 
 // Each entry is the 3 sessions (Mon / Thu / Fri) for that week.
+// Weeks 1-4: a fixed Run 2 min / Walk 2 min interval, with the total
+// session duration increasing each week. Weeks 5-10: continuous runs
+// building distance up to the goal run - 10km in week 10.
 const WEEKLY_SESSIONS = [
-  // Week 1 - introduce walk-run intervals, 20 minutes total
+  // Week 1 - 20 minutes: 5 x (run 2 / walk 2)
   [
-    { day: "Mon", type: "Walk-Run", detail: "Run 1 min / Walk 1.5 min x 8", durationMin: 20 },
-    { day: "Thu", type: "Walk-Run", detail: "Run 1 min / Walk 1.5 min x 8", durationMin: 20 },
-    { day: "Fri", type: "Walk-Run", detail: "Run 1 min / Walk 1.5 min x 8", durationMin: 20 },
+    { day: "Mon", type: "Walk-Run", detail: "Run 2 min / Walk 2 min x 5", durationMin: 20 },
+    { day: "Thu", type: "Walk-Run", detail: "Run 2 min / Walk 2 min x 5", durationMin: 20 },
+    { day: "Fri", type: "Walk-Run", detail: "Run 2 min / Walk 2 min x 5", durationMin: 20 },
   ],
-  // Week 2 - slightly longer session, longer run intervals
+  // Week 2 - 24 minutes: 6 x (run 2 / walk 2)
   [
-    { day: "Mon", type: "Walk-Run", detail: "Run 1.5 min / Walk 2 min x 7", durationMin: 24 },
-    { day: "Thu", type: "Walk-Run", detail: "Run 1.5 min / Walk 2 min x 7", durationMin: 24 },
-    { day: "Fri", type: "Walk-Run", detail: "Run 1.5 min / Walk 2 min x 7", durationMin: 24 },
+    { day: "Mon", type: "Walk-Run", detail: "Run 2 min / Walk 2 min x 6", durationMin: 24 },
+    { day: "Thu", type: "Walk-Run", detail: "Run 2 min / Walk 2 min x 6", durationMin: 24 },
+    { day: "Fri", type: "Walk-Run", detail: "Run 2 min / Walk 2 min x 6", durationMin: 24 },
   ],
-  // Week 3 - run intervals grow, Friday is the "long" session
+  // Week 3 - 28 minutes: 7 x (run 2 / walk 2)
   [
-    { day: "Mon", type: "Walk-Run", detail: "Run 3 min / Walk 1.5 min x 6", durationMin: 27 },
-    { day: "Thu", type: "Walk-Run", detail: "Run 3 min / Walk 1.5 min x 6", durationMin: 27 },
-    { day: "Fri", type: "Walk-Run", detail: "Run 5 min / Walk 2 min x 4 + Run 5 min", durationMin: 33 },
+    { day: "Mon", type: "Walk-Run", detail: "Run 2 min / Walk 2 min x 7", durationMin: 28 },
+    { day: "Thu", type: "Walk-Run", detail: "Run 2 min / Walk 2 min x 7", durationMin: 28 },
+    { day: "Fri", type: "Walk-Run", detail: "Run 2 min / Walk 2 min x 7", durationMin: 28 },
   ],
-  // Week 4 - fewer, longer run blocks
+  // Week 4 - 32 minutes: 8 x (run 2 / walk 2)
   [
-    { day: "Mon", type: "Walk-Run", detail: "Run 5 min / Walk 2.5 min x 4", durationMin: 30 },
-    { day: "Thu", type: "Walk-Run", detail: "Run 5 min / Walk 2.5 min x 4", durationMin: 30 },
-    { day: "Fri", type: "Walk-Run", detail: "Run 8 min / Walk 3 min x 3", durationMin: 33 },
+    { day: "Mon", type: "Walk-Run", detail: "Run 2 min / Walk 2 min x 8", durationMin: 32 },
+    { day: "Thu", type: "Walk-Run", detail: "Run 2 min / Walk 2 min x 8", durationMin: 32 },
+    { day: "Fri", type: "Walk-Run", detail: "Run 2 min / Walk 2 min x 8", durationMin: 32 },
   ],
-  // Week 5 - first continuous run on the long day
+  // Week 5 - first fully continuous week
   [
-    { day: "Mon", type: "Walk-Run", detail: "Run 8 min / Walk 2 min x 3", durationMin: 30 },
-    { day: "Thu", type: "Walk-Run", detail: "Run 10 min / Walk 2 min x 2", durationMin: 24 },
-    { day: "Fri", type: "Run", detail: "Continuous run, easy pace", durationMin: null, distanceKm: 3 },
+    { day: "Mon", type: "Run", detail: "Easy continuous run", durationMin: null, distanceKm: 2 },
+    { day: "Thu", type: "Run", detail: "Continuous run, steady pace", durationMin: null, distanceKm: 2.5 },
+    { day: "Fri", type: "Run", detail: "Long run, steady pace", durationMin: null, distanceKm: 3 },
   ],
   // Week 6
   [
     { day: "Mon", type: "Run", detail: "Easy continuous run", durationMin: null, distanceKm: 3 },
-    { day: "Thu", type: "Run", detail: "Continuous run, 1 min walk break each km", durationMin: null, distanceKm: 3.5 },
+    { day: "Thu", type: "Run", detail: "Continuous run, steady pace", durationMin: null, distanceKm: 3.5 },
     { day: "Fri", type: "Run", detail: "Long run, steady pace", durationMin: null, distanceKm: 4.5 },
   ],
   // Week 7

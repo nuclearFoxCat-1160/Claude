@@ -1,8 +1,9 @@
 import { usePlan, allWorkouts } from "../PlanContext";
 import Header from "../components/Header";
+import Timeline from "../components/Timeline";
 
 function toISO(date) {
-  return date.toISOString().slice(0, 10);
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
 }
 
 function workoutMeta(w) {
@@ -38,7 +39,11 @@ export default function TodayPage() {
               {todayWorkout.completed ? "Completed ✓" : "Mark as completed"}
             </button>
           </div>
-        ) : (
+        ) : null}
+
+        {todayWorkout && <Timeline workout={todayWorkout} />}
+
+        {!todayWorkout && (
           <div className="card today-card">
             <div className="big-icon">😴</div>
             <h2>Rest day</h2>
