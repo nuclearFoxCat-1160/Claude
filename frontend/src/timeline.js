@@ -33,6 +33,18 @@ export function buildTimeline(workout) {
   });
 }
 
+export function totalSessionMinutes(workout) {
+  const segments = buildTimeline(workout);
+  return Math.round(segments[segments.length - 1].end / 60);
+}
+
+export function workoutMeta(workout) {
+  const total = totalSessionMinutes(workout);
+  if (workout.distanceKm) return `${workout.detail} · ${workout.distanceKm} km · ~${total} min total`;
+  if (workout.durationMin) return `${workout.detail} · ${total} min total`;
+  return workout.detail;
+}
+
 export function fmtClock(totalSec) {
   const sec = Math.max(0, Math.round(totalSec));
   const m = Math.floor(sec / 60);

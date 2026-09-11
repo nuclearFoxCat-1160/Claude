@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { usePlan, allWorkouts } from "../PlanContext";
 import Header from "../components/Header";
+import { workoutMeta } from "../timeline";
 
 const DOW = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
@@ -10,12 +11,6 @@ function toISO(date) {
 
 function startOfMonth(date) {
   return new Date(date.getFullYear(), date.getMonth(), 1);
-}
-
-function workoutMeta(w) {
-  if (w.distanceKm) return `${w.detail} · ${w.distanceKm} km`;
-  if (w.durationMin) return `${w.detail} · ${w.durationMin} min`;
-  return w.detail;
 }
 
 export default function CalendarPage() {

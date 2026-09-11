@@ -1,8 +1,4 @@
-function workoutMeta(w) {
-  if (w.distanceKm) return `${w.detail} · ${w.distanceKm} km`;
-  if (w.durationMin) return `${w.detail} · ${w.durationMin} min`;
-  return w.detail;
-}
+import { workoutMeta } from "../timeline";
 
 function isCurrentWeek(week) {
   const today = new Date();

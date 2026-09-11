@@ -1,15 +1,10 @@
 import { usePlan, allWorkouts } from "../PlanContext";
 import Header from "../components/Header";
 import Timeline from "../components/Timeline";
+import { workoutMeta } from "../timeline";
 
 function toISO(date) {
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
-}
-
-function workoutMeta(w) {
-  if (w.distanceKm) return `${w.detail} · ${w.distanceKm} km`;
-  if (w.durationMin) return `${w.detail} · ${w.durationMin} min`;
-  return w.detail;
 }
 
 export default function TodayPage() {
