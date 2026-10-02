@@ -420,14 +420,29 @@
   }
   sizeButtons.forEach((b) => b.addEventListener('click', () => setQty(+b.dataset.qty)));
 
-  $('#reset').addEventListener('click', () => {
-    if (!confirm(`Reset to ${usd.format(STARTING_CASH)} cash and clear all positions?`)) return;
+  // Two-tap reset: native confirm() dialogs are blocked in embedded viewers.
+  const resetBtn = $('#reset');
+  let resetTimer;
+  resetBtn.addEventListener('click', () => {
+    if (!resetBtn.classList.contains('confirming')) {
+      resetBtn.classList.add('confirming');
+      resetBtn.textContent = 'Tap again to reset';
+      resetTimer = setTimeout(disarmReset, 3000);
+      return;
+    }
+    disarmReset();
     portfolio = P.createPortfolio(STARTING_CASH);
     lastTrade = null;
     save();
     renderList();
     refreshAll();
+    showToast(`Reset to ${usd.format(STARTING_CASH)} cash`);
   });
+  function disarmReset() {
+    clearTimeout(resetTimer);
+    resetBtn.classList.remove('confirming');
+    resetBtn.textContent = 'Reset';
+  }
 
   // ---------- Simulated market feed ----------
   function tick() {
