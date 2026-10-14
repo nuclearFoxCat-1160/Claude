@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <title>Couple's Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <!-- sign in -->
+  <section id="login-view" class="wrap hidden">
+    <form id="login-form" class="panel login">
+      <h2 style="margin-bottom:8px">Couple sign-in</h2>
+      <p class="muted small" style="margin-top:0">Contributions and messages are visible only after signing in.</p>
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required />
+      </div>
+      <p class="error" id="login-error" role="alert"></p>
+      <div class="actions"><a class="btn ghost" href="/">Back</a><button type="submit">Sign in</button></div>
+    </form>
+  </section>
+
+  <!-- dashboard -->
+  <section id="app-view" class="wrap hidden">
+    <div class="topbar">
+      <h1 id="title">Our dashboard</h1>
+      <div style="display:flex;gap:8px">
+        <a class="btn ghost" href="/" target="_blank" rel="noopener">View guest page</a>
+        <button type="button" class="ghost" id="logout">Sign out</button>
+      </div>
+    </div>
+
+    <nav class="tabs" role="tablist">
+      <button role="tab" data-tab="dreams" aria-selected="true">Dreams</button>
+      <button role="tab" data-tab="gifts" aria-selected="false">Contributions</button>
+      <button role="tab" data-tab="settings" aria-selected="false">Settings</button>
+    </nav>
+
+    <!-- dreams tab -->
+    <div data-panel="dreams">
+      <div class="toolbar">
+        <h2>Our dreams</h2>
+        <button type="button" id="add-dream">+ Add a dream</button>
+      </div>
+      <div class="panel" id="dream-list"></div>
+    </div>
+
+    <!-- contributions tab -->
+    <div data-panel="gifts" class="hidden">
+      <div class="stats" id="stats"></div>
+      <div class="panel">
+        <div class="toolbar">
+          <select id="filter" aria-label="Filter by dream"></select>
+          <button type="button" class="ghost" id="export">Download CSV</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Date</th><th>Guest</th><th>Dream</th><th>Amount</th><th>Message</th><th></th></tr></thead>
+            <tbody id="gift-rows"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- settings tab -->
+    <div data-panel="settings" class="hidden">
+      <form class="panel" id="settings-form" style="max-width:640px">
+        <div class="two">
+          <div class="field"><label for="s-bride">Bride's name</label><input id="s-bride" name="brideName" type="text" maxlength="80" required /></div>
+          <div class="field"><label for="s-groom">Groom's name</label><input id="s-groom" name="groomName" type="text" maxlength="80" required /></div>
+        </div>
+        <div class="field">
+          <label for="s-currency">Currency</label>
+          <input id="s-currency" name="currency" type="text" maxlength="3" style="max-width:120px;text-transform:uppercase" required />
+          <div class="hint">3-letter code, e.g. USD, EUR, GBP, HKD, SGD.</div>
+        </div>
+        <div class="field">
+          <label for="s-welcome">Welcome message for guests</label>
+          <textarea id="s-welcome" name="welcome" maxlength="1000"></textarea>
+        </div>
+        <p class="error" id="settings-error" role="alert"></p>
+        <div class="actions" style="justify-content:flex-start"><button type="submit">Save settings</button><span id="settings-saved" class="muted small hidden" style="align-self:center">Saved ✓</span></div>
+      </form>
+    </div>
+  </section>
+
+  <!-- dream editor -->
+  <dialog id="dream-dialog" aria-labelledby="dream-dialog-title">
+    <form class="inner" id="dream-form" novalidate>
+      <header>
+        <h2 id="dream-dialog-title">Add a dream</h2>
+        <button type="button" class="close" data-close aria-label="Close">×</button>
+      </header>
+      <div class="field">
+        <label for="d-title">The dream</label>
+        <input id="d-title" name="title" type="text" maxlength="120" placeholder="Honeymoon in Kyoto" required />
+      </div>
+      <div class="field">
+        <label for="d-description">A few words about it <span class="muted">(optional)</span></label>
+        <textarea id="d-description" name="description" maxlength="1000"></textarea>
+      </div>
+      <div class="field">
+        <label for="d-goal">How much does it need?</label>
+        <div class="money"><span id="d-symbol">$</span><input id="d-goal" name="goal" type="number" min="0.01" step="0.01" inputmode="decimal" required /></div>
+      </div>
+      <div class="field">
+        <label>Who is it for?</label>
+        <div class="radio-row" id="d-recipient">
+          <label><input type="radio" name="recipient" value="bride" /> <span data-name="bride">Bride</span></label>
+          <label><input type="radio" name="recipient" value="groom" /> <span data-name="groom">Groom</span></label>
+          <label><input type="radio" name="recipient" value="both" checked /> Both of us</label>
+        </div>
+      </div>
+      <div class="field">
+        <label for="d-image">Image <span class="muted">(optional, up to 5 MB)</span></label>
+        <input id="d-image" type="file" accept="image/png,image/jpeg,image/webp,image/gif" />
+        <img id="d-preview" class="preview hidden" alt="" />
+        <button type="button" class="link small hidden" id="d-remove-image" style="margin-top:6px">Remove image</button>
+      </div>
+      <p class="error" id="dream-error" role="alert"></p>
+      <div class="actions">
+        <button type="button" class="ghost" data-close>Cancel</button>
+        <button type="submit" id="dream-save">Save dream</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="/common.js"></script>
+  <script src="/admin.js"></script>
+</body>
+</html>

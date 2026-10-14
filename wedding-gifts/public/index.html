@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Our Wedding Wishes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="hero wrap">
+    <div class="eyebrow">Our wedding wishes</div>
+    <h1 id="couple">&nbsp;</h1>
+    <p id="welcome"></p>
+    <div class="privacy" role="note">
+      <span id="lock-hero"></span>
+      <div>
+        <strong>Your gift stays private.</strong>
+        Only <span class="couple-short">the couple</span> can see who contributed, how much, and any message you leave.
+        Other guests never see names, amounts or totals.
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="grid" id="dreams" aria-live="polite">
+      <div class="empty">Loading our dreams…</div>
+    </section>
+  </main>
+
+  <footer class="site wrap">With love and thanks · <a href="/admin">Couple sign-in</a></footer>
+
+  <dialog id="give" aria-labelledby="give-title">
+    <div class="inner">
+      <form id="give-form" novalidate>
+        <header>
+          <div>
+            <h2 id="give-title">Contribute to a dream</h2>
+            <p class="muted small" style="margin:6px 0 0">A pledge for the couple — no payment is taken here.</p>
+          </div>
+          <button type="button" class="close" data-close aria-label="Close">×</button>
+        </header>
+
+        <div class="field">
+          <label for="g-dream">Which dream?</label>
+          <select id="g-dream" name="dreamId" required></select>
+        </div>
+
+        <div class="field">
+          <label for="g-name">Your name</label>
+          <input id="g-name" name="name" type="text" maxlength="100" autocomplete="name" required />
+        </div>
+
+        <div class="field">
+          <label for="g-amount">How much would you like to contribute?</label>
+          <div class="money">
+            <span id="g-symbol">$</span>
+            <input id="g-amount" name="amount" type="number" inputmode="decimal" min="1" step="0.01" required />
+          </div>
+          <div class="chips" id="g-chips"></div>
+        </div>
+
+        <div class="field">
+          <label for="g-message">Greetings or notes <span class="muted">(optional)</span></label>
+          <textarea id="g-message" name="message" maxlength="2000" placeholder="Wishing you a lifetime of adventures together…"></textarea>
+        </div>
+
+        <div class="privacy" style="margin:0 0 16px">
+          <span id="lock-form"></span>
+          <div class="small">Your name, amount and message are sent privately to <span class="couple-short">the couple</span>. No one else can see them.</div>
+        </div>
+
+        <p class="error" id="g-error" role="alert"></p>
+        <div class="actions">
+          <button type="button" class="ghost" data-close>Cancel</button>
+          <button type="submit" id="g-submit">Send my gift</button>
+        </div>
+      </form>
+
+      <div id="give-thanks" class="thanks hidden">
+        <div class="heart">♥</div>
+        <h2>Thank you!</h2>
+        <p id="thanks-text"></p>
+        <p class="muted small">Only <span class="couple-short">the couple</span> will see your gift and message.</p>
+        <div class="actions" style="justify-content:center">
+          <button type="button" data-close>Close</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="/common.js"></script>
+  <script src="/guest.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "name": "wedding-gifts",
+  "version": "1.0.0",
+  "description": "A small wedding gift collection app: the couple lists their dreams, guests pledge contributions privately.",
+  "main": "server.js",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test test/*.test.js"
+  }
+}
